@@ -1,0 +1,12 @@
+services:
+  app:
+    build: .
+    container_name: wx-lark-sso
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - app-data:/app/backend/data
+
+volumes:
+  app-data:

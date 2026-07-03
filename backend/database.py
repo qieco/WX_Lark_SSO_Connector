@@ -1,7 +1,8 @@
 import aiosqlite
 import os
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "endpoints.db")
+DB_DIR = os.path.join(os.path.dirname(__file__), "data")
+DB_PATH = os.path.join(DB_DIR, "endpoints.db")
 
 CREATE_TABLE_SQL = """
 CREATE TABLE IF NOT EXISTS endpoints (
@@ -30,6 +31,7 @@ DEFAULT_SETTINGS = [
 
 async def init_db():
     """Create tables and seed defaults."""
+    os.makedirs(DB_DIR, exist_ok=True)
     async with aiosqlite.connect(DB_PATH) as db:
         await db.execute(CREATE_TABLE_SQL)
         await db.execute(CREATE_SETTINGS_SQL)
